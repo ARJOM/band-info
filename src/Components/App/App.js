@@ -30,7 +30,7 @@ function App() {
     );
 
   const banda =
-      <div>
+      <div className="App">
         <p>Resultado da sua busca</p>
         <p>Artista: {band['strArtist']}</p>
         <p>Biografia: {band['strBiographyPT']}</p>
@@ -51,9 +51,7 @@ function App() {
   return (
       <Fragment>
           <Search function={handleSearch}/>
-          <div className="App">
-              {banda}
-          </div>
+          {banda}
       </Fragment>
 
   );
