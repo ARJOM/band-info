@@ -11,7 +11,7 @@ function App() {
     try{
         setBand(result.data['artists'][0]);
     } catch (e) {
-        console.log(e)
+        setBand(false)
     }
   };
 
@@ -24,11 +24,7 @@ function App() {
             event.preventDefault();
             const { bandS } = event.target.elements;
             alert(bandS.value);
-            try{
-                getBand(bandS.value);
-            } catch (e) {
-                console.log("Falhou");
-            }
+            getBand(bandS.value);
         },
         []
     );
@@ -46,7 +42,7 @@ function App() {
           <Fragment>
               <Search function={handleSearch}/>
               <div className="App">
-                  <p>Pesquise por algo</p>
+                  <p>Nada a ser mostrado</p>
               </div>
           </Fragment>
 
