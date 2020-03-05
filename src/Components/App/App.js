@@ -23,7 +23,6 @@ function App() {
         async event => {
             event.preventDefault();
             const { bandS } = event.target.elements;
-            alert(bandS.value);
             getBand(bandS.value);
         },
         []
