@@ -1,31 +1,65 @@
-import React, {useState, useEffect} from 'react';
+import React, {Fragment, useState, useEffect, useCallback} from 'react';
 import './App.css';
 import axios from "axios"
+import Search from "../Search/Search";
 
 function App() {
   const [band, setBand] = useState(false)
 
   let getBand = async (banda) => {
     let result = await axios.get("https://www.theaudiodb.com/api/v1/json/1/search.php?s=" + banda);
-    setBand(result.data['artists'][0]);
+    try{
+        setBand(result.data['artists'][0]);
+    } catch (e) {
+        console.log(e)
+    }
   };
 
   useEffect(() => {
-    getBand("The Beatles");
+    getBand();
   }, []);
+
+    const handleSearch = useCallback(
+        async event => {
+            event.preventDefault();
+            const { bandS } = event.target.elements;
+            alert(bandS.value);
+            try{
+                getBand(bandS.value);
+            } catch (e) {
+                console.log("Falhou");
+            }
+        },
+        []
+    );
 
   const banda =
       <div>
         <p>Resultado da sua busca</p>
         <p>Artista: {band['strArtist']}</p>
         <p>Biografia: {band['strBiographyPT']}</p>
-        <p>País: {band['strCountry']}</p>
+        <p>Localização: {band['strCountry']}</p>
       </div>;
 
+  if (band===false){
+      return (
+          <Fragment>
+              <Search function={handleSearch}/>
+              <div className="App">
+                  <p>Pesquise por algo</p>
+              </div>
+          </Fragment>
+
+      )
+  }
   return (
-    <div className="App">
-      {banda}
-    </div>
+      <Fragment>
+          <Search function={handleSearch}/>
+          <div className="App">
+              {banda}
+          </div>
+      </Fragment>
+
   );
 }
 
